@@ -102,6 +102,33 @@
         }
         .gallery-item:hover .overlay { opacity: 1; }
 
+        /* --- NEW TASK SECTION STYLES --- */
+        .task-wrapper {
+            background: white;
+            color: black;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .task-wrapper h1 { font-size: 1.8rem; margin-bottom: 10px; color: #1a1a1a; }
+        .task-wrapper p { margin-bottom: 20px; color: #333; }
+        
+        .food-box {
+            border: 2px solid #000;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+        .food-box img {
+            width: 80px;
+            height: auto;
+            transition: 0.3s;
+        }
+        .food-box img:hover { transform: scale(1.1); }
+
         /* --- ANIMATIONS (REQUIRED FOR JS LOGIC) --- */
         .hidden { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
         .show { opacity: 1; transform: translateY(0); }
@@ -114,7 +141,7 @@
             .hero { flex-direction: column-reverse; text-align: center; justify-content: center; gap: 30px; }
             .hero-content h1 { font-size: 2.5rem; }
             .navbar { padding: 20px; }
-            .nav-links { display: none; } /* Simplified for demo */
+            .nav-links { display: none; }
         }
     </style>
 </head>
@@ -133,7 +160,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#portfolio">Portfolio</a></li>
-            <li><a href="#contact" class="btn-contact">Contact</a></li>
+            <li><a href="#task">Vue Task</a></li> <li><a href="#contact" class="btn-contact">Contact</a></li>
         </ul>
     </nav>
 
@@ -211,6 +238,24 @@
             </transition-group>
         </section>
 
+        <section id="task" class="hidden">
+            <h2 class="section-title">Vue Task Integration</h2>
+            
+            <div class="task-wrapper">
+                <h1>Example 'v-for' to create images</h1>
+                <p>The 'v-for' directive is used to create images based on the 'manyFoods' array in the Vue instance.</p>
+
+                <div class="food-box">
+                    <img 
+                      v-for="x in manyFoods" 
+                      :key="x" 
+                      :src="'https://www.w3schools.com/vue/' + x"
+                      :alt="x"
+                    >
+                </div>
+            </div>
+        </section>
+
     </div> 
 
     <footer id="contact">
@@ -229,6 +274,17 @@
         createApp({
             data() {
                 return {
+                    // --- VUE TASK DATA (ADDED) ---
+                    manyFoods: [
+                        'img_burrito.svg',
+                        'img_salad.svg',
+                        'img_cake.svg',
+                        'img_soup.svg',
+                        'img_fish.svg',
+                        'img_pizza.svg',
+                        'img_rice.svg'
+                    ],
+
                     // --- TYPING EFFECT DATA ---
                     displayText: '',
                     words: ["Cyber Security Specialist", "Forensics Analyst", "Faithful Believer"],
