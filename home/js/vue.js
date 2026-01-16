@@ -1,7 +1,15 @@
 const app = Vue.createApp({
    data() {
     return {
-     message: "Songs of Songs 1:2"
+      manyFoods: [
+        'img_burrito.svg',
+        'img_salad.svg',
+        'img_cake.svg',
+        'img_soup.svg',
+        'img_fish.svg',
+        'img_pizza.svg',
+        'img_rice.svg'
+      ]
     }
    }
   })
