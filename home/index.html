@@ -2,16 +2,11 @@
 <html>
 <head>
   <title>My first Vue page</title>
-  <style>
-    #app {
-      display: inline-block;
-      padding: 10px;
-      font-size: x-large;
-      background-color: lightgreen;
-    }
-  </style>
 </head>
 <body>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/flexbox-grid.css">
 
 <h1>Vue Example</h1>
 
@@ -22,19 +17,6 @@
 </div>
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-<script>
-  const app = Vue.createApp({
-   data() {
-    return {
-     message: "Hello World!"
-    }
-   }
-  })
-  
-  app.mount('#app')
-
-</script>
 
 </body>
 </html>
