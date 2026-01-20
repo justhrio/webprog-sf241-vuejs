@@ -2,12 +2,13 @@ App.vue
  
 <template>
   <h1>Food</h1>
-  <food-item/>
-  <food-item/>
-  <food-item/>
-  <food-item2/>
-  <food-item2/>
-  <food-item2/>
+  <food-item class="green"/>
+  <food-item class="green"/>
+  <food-item class="green"/>
+
+  <food-item2 class="pink"/>
+  <food-item2 class="pink"/>
+  <food-item2 class="pink"/>
 </template>
  
 <script></script>
@@ -21,17 +22,17 @@ App.vue
     display: inline-block;
     margin: 10px;
     padding: 10px;
+ }
+
+ /* Specific colors */
+  .green {
     background-color: lightgreen;
   }
-</style>
 
-<style>
- #app > div {
-    border: dashed black 1px;
-    display: inline-block;
-    margin: 10px;
-    padding: 10px;
+  .pink {
     background-color: rgb(255, 0, 234);
   }
 </style>
+
+
 
