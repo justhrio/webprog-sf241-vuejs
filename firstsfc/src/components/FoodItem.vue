@@ -16,4 +16,15 @@ export default {
 };
 </script>
  
+<script>
+export default {
+  data() {
+    return {
+      name: 'Lemon zest',
+      message: 'sour'
+    }
+  }
+};
+</script>
+
 <style></style>
