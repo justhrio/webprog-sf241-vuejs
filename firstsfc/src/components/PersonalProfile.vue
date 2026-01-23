@@ -111,6 +111,7 @@
 
 <script>
 export default {
+  name: 'PersonalProfile',
   data() {
     return {
       // --- VUE TASK DATA ---
@@ -127,17 +128,21 @@ export default {
       currentCategory: 'All',
       categories: ['All', 'Security', 'Development', 'IoT'],
 
-      // --- SERVICES & SKILLS & PROJECTS (Shortened for brevity) ---
+      // --- SERVICES DATA ---
       services: [
         { title: "Cyber Security", desc: "Vulnerability Assessment & Forensics.", icon: "fas fa-shield-alt" },
         { title: "Web Development", desc: "Full-stack apps using Vue.", icon: "fas fa-code" }
       ],
+
+      // --- SKILLS DATA ---
       skills: {
         "Languages": [
           { name: "Python", icon: "devicon-python-plain colored" },
           { name: "Java", icon: "devicon-java-plain colored" }
         ]
       },
+
+      // --- PROJECTS DATA ---
       projects: [
         { title: "Network Defense", category: "Security", tech: "Kali Linux", image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000" },
         { title: "Secure Dashboard", category: "Development", tech: "Vue.js", image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000" }
@@ -187,18 +192,138 @@ export default {
 </script>
 
 <style>
-/* Paste your personalprofile.css content here. 
-   IMPORTANT: Since this is global, it might affect your other FoodItems 
-   unless you remove them or wrap them. */
-   
-:root { --primary: #4e54c8; --secondary: #8f94fb; --dark: #1a1a1a; --light: #f4f4f4; }
-body { background: var(--dark); color: var(--light); font-family: 'Poppins', sans-serif; }
-.navbar { display: flex; justify-content: space-between; padding: 20px 50px; background: rgba(26,26,26,0.9); position: sticky; top:0; z-index: 1000;}
-.hero { min-height: 90vh; display: flex; align-items: center; padding: 0 10%; }
-.hero-content h1 { font-size: 4rem; background: linear-gradient(to right, #fff, #8f94fb); -webkit-background-clip: text; color: transparent; }
-.btn-primary { padding: 12px 30px; background: linear-gradient(45deg, var(--primary), var(--secondary)); color: white; border-radius: 30px; text-decoration: none; }
+/* --- CSS RESET & VARIABLES --- */
+:root {
+    --primary: #4e54c8;
+    --secondary: #8f94fb;
+    --dark: #1a1a1a;
+    --light: #f4f4f4;
+    --glass: rgba(255, 255, 255, 0.1);
+    --border: rgba(255, 255, 255, 0.2);
+}
+
+/* Ensure these don't break your main layout */
+.profile-container {
+    background: var(--dark);
+    color: var(--light);
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+}
+
+.profile-container * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+/* --- BACKGROUND SHAPES --- */
+.background-shapes .shape {
+    position: fixed; filter: blur(100px); z-index: 0;
+}
+.shape-1 { top: -10%; left: -10%; width: 500px; height: 500px; background: var(--primary); border-radius: 50%; opacity: 0.5; }
+.shape-2 { bottom: 10%; right: -10%; width: 400px; height: 400px; background: var(--secondary); border-radius: 50%; opacity: 0.4; }
+
+/* --- NAVBAR --- */
+.navbar {
+    display: flex; justify-content: space-between; align-items: center; padding: 20px 50px;
+    background: rgba(26, 26, 26, 0.9); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000;
+}
+.logo { font-size: 1.5rem; font-weight: 800; color: var(--secondary); }
+.nav-links { list-style: none; display: flex; gap: 30px; }
+.nav-links a { text-decoration: none; color: var(--light); font-weight: 500; transition: 0.3s; }
+.nav-links a:hover { color: var(--secondary); }
+.btn-contact { background: var(--primary); padding: 8px 20px; border-radius: 20px; }
+
+/* --- HERO SECTION --- */
+.hero {
+    min-height: 90vh; display: flex; align-items: center; justify-content: space-between; padding: 0 10%;
+}
+.hero-content h1 { font-size: 4rem; margin: 10px 0; background: linear-gradient(to right, #fff, #8f94fb); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.typewriter { color: var(--secondary); min-height: 1.5em; }
+.hero-img img { width: 300px; height: 300px; border-radius: 50%; object-fit: cover; border: 5px solid var(--secondary); box-shadow: 0 0 30px var(--primary); }
+
+.social-icons { margin: 20px 0; }
+.social-icons a { color: var(--light); font-size: 1.5rem; margin-right: 20px; transition: 0.3s; }
+.social-icons a:hover { color: var(--secondary); transform: translateY(-3px); }
+
+.btn-primary {
+    display: inline-block; padding: 12px 30px; background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white; text-decoration: none; border-radius: 30px; font-weight: 600; margin-top: 20px;
+}
+
+/* --- SECTIONS GENERAL --- */
+section { padding: 80px 10%; }
+.section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; position: relative; display: inline-block; left: 50%; transform: translateX(-50%); }
+.section-title::after { content: ''; position: absolute; bottom: -10px; left: 0; width: 100%; height: 4px; background: var(--secondary); border-radius: 2px; }
+
+/* --- CARDS & GLASSMORPHISM --- */
+.cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+.glass-card {
+    background: rgba(255,255,255,0.05); padding: 30px; border-radius: 15px; border: 1px solid var(--border);
+    text-align: center; transition: 0.3s;
+}
+.glass-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.1); }
+.card-icon { font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px; }
+
+/* --- SKILLS --- */
+.skills-container { display: flex; flex-direction: column; gap: 40px; }
+.skill-grid { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 15px; }
+.skill-item {
+    background: rgba(255,255,255,0.05); padding: 15px 25px; border-radius: 10px; display: flex; align-items: center; gap: 10px; font-size: 1.2rem;
+    border: 1px solid transparent; transition: 0.3s;
+}
+.skill-item:hover { border-color: var(--secondary); box-shadow: 0 0 15px rgba(143, 148, 251, 0.3); }
+.skill-item i { font-size: 1.5rem; }
+
+/* --- PORTFOLIO --- */
+.filter-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 40px; }
+.filter-buttons button {
+    background: transparent; border: 1px solid var(--secondary); color: var(--light); padding: 8px 20px; border-radius: 20px; cursor: pointer; transition: 0.3s;
+}
+.filter-buttons button.active, .filter-buttons button:hover { background: var(--secondary); color: white; }
+
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.gallery-item { position: relative; border-radius: 15px; overflow: hidden; height: 250px; cursor: pointer; }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+.gallery-item:hover img { transform: scale(1.1); }
+.overlay {
+    position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8);
+    display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: 0.3s;
+}
+.gallery-item:hover .overlay { opacity: 1; }
+
+/* --- ANIMATIONS --- */
 .hidden { opacity: 0; transform: translateY(50px); transition: all 1s ease-out; }
 .show { opacity: 1; transform: translateY(0); }
-.task-wrapper { background: white; color: black; padding: 30px; border-radius: 10px; }
-.food-box img { width: 80px; margin: 10px; }
+
+/* --- VUE TASK SPECIFIC --- */
+.task-wrapper {
+    background: white;
+    color: black;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.task-wrapper h1 { font-size: 1.8rem; margin-bottom: 10px; color: #1a1a1a; }
+.task-wrapper p { margin-bottom: 20px; color: #333; }
+
+.food-box {
+    border: 2px solid #000;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+.food-box img {
+    width: 80px;
+    height: auto;
+    transition: 0.3s;
+}
+.food-box img:hover { transform: scale(1.1); }
+
+/* Mobile */
+@media (max-width: 768px) {
+    .hero { flex-direction: column-reverse; text-align: center; justify-content: center; gap: 30px; }
+    .hero-content h1 { font-size: 2.5rem; }
+    .navbar { padding: 20px; }
+    .nav-links { display: none; }
+}
 </style>
