@@ -1,27 +1,21 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { supabase } from './lib/supabaseClient'
+
+const instruments = ref([])
+
+async function getInstruments() {
+  const { data } = await supabase.from('instruments').select()
+  instruments.value = data
+}
+
+onMounted(() => {
+   getInstruments()
+})
+</script>
+
 <template>
-  <h1>Food</h1>
-  <div class="food-container">
-    <food-item class="green"/>
-    <food-item class="green"/>
-    <food-item2 class="pink"/>
-    <food-item2 class="pink"/>
-  </div>
-
-  <personal-profile />
+  <ul>
+    <li v-for="instrument in instruments" :key="instrument.id">{{ instrument.name }}</li>
+  </ul>
 </template>
-
-<script></script>
-
-<style>
-  /* Updated selector to only target the food container, 
-     so it doesn't put a border around your Personal Profile */
-  .food-container > div {
-    border: dashed black 1px;
-    display: inline-block;
-    margin: 10px;
-    padding: 10px;
-  }
-
-  .green { background-color: lightgreen; }
-  .pink { background-color: rgb(255, 0, 234); }
-</style>
