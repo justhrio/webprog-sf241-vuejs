@@ -12,7 +12,7 @@ const app = createApp(App)
 
 app.component('food-item', FoodItem)
 app.component('food-item2', FoodItem2)
-// 2. Register it here
 app.component('personal-profile', PersonalProfile) 
-
+app.component('comment-form', CommentForm)
+app.component('comment', Comment)
 app.mount('#app')
